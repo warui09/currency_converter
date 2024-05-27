@@ -1,34 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Currency Converter</title>
-<link rel="stylesheet" href="../static/css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('currency-bg.png'); /* Path to background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        h2 {
+            color: #007bff;
+        }
+        .form-control {
+            border: 1px solid #007bff;
+        }
+        #result {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h1>Currency Converter</h1>
-    <form id="currency-form">
-        <label for="amount">Amount:</label>
-	<input type="number" id="amount" name="amount" required>
+    <div class="container">
+        <h2 class="mt-5 text-center">Currency Converter</h2>
+        <form id="converter-form">
+            <div class="form-group">
+                <label for="amount">Amount:</label>
+                <input type="number" class="form-control" id="amount" name="amount" required>
+            </div>
+            <div class="form-group">
+                <label for="base_currency">Source Currency:</label>
+                <select class="form-control" id="base_currency" name="base_currency">
+                    {% for currency in currencies %}
+                        <option value="{{ currency }}">{{ currency }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="target_currency">Target Currency:</label>
+                <select class="form-control" id="target_currency" name="target_currency">
+                    {% for currency in currencies %}
+                        <option value="{{ currency }}">{{ currency }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Convert</button>
+        </form>
+        <div class="mt-4 text-center">
+            <h4 id="result"></h4>
+        </div>
+    </div>
 
-        <label for="source_currency">Source Currency:</label>
-	<div id="source_currency">
-		{% include 'currencies_form.html' %}
-	</div
-
-        <label for="target_currency">Target Currency:</label>
-	<div id="target_currency">
-		{% include 'currencies_form.html' %}
-	</div>
-
-        <button type="submit">Convert</button>
-    </form>
-    <div id="result"></div>
-</div>
-
-<script src="./static/js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#converter-form').on('submit', function(event) {
+                event.preventDefault();
+                const formData = $(this).serialize();
+                $.post('/convert', formData, function(data) {
+                    if (data.error) {
+                        $('#result').text(data.error).css('color', 'red');
+                    } else {
+                        $('#result').text(data.converted_amount).css('color', 'green');
+                    }
+                }, 'json');
+            });
+        });
+    </script>
 </body>
 </html>
