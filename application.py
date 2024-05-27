@@ -1,7 +1,7 @@
 import requests
 import time
 
-API_KEY = '95225285c336cae7d2d73db3'  # Your API key from Exchangerate-API
+API_KEY = '95225285c336cae7d2d73db3'  # API key from Exchangerate-API
 BASE_URL = 'https://v6.exchangerate-api.com/v6/'
 
 def get_exchange_rate(base_currency, target_currency, max_retries=3):
@@ -29,6 +29,7 @@ def get_exchange_rate(base_currency, target_currency, max_retries=3):
     print(f"Failed to fetch exchange rate after {max_retries} retries.")
     return None
 
+'''
 def convert_currency():
     print("Welcome to the Currency Converter App")
     
@@ -65,3 +66,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+'''

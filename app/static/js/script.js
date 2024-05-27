@@ -1,24 +1,33 @@
-const form = document.getElementById('currency-form');
-const resultDiv = document.getElementById('result');
+document.addEventListener('DOMContentLoaded', (event) => {
+    const form = document.getElementById('currency-form');
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
 
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const amount = document.getElementById('amount').value;
-    const sourceCurrency = document.getElementById('source_currency').value;
-    const targetCurrency = document.getElementById('target_currency').value;
+	const form = document.getElementById('currency-form');
+        const formData = new FormData(form);
+        const data = {
+            amount: formData.get('amount'),
+            source_currency: formData.get('source_currency'),
+            target_currency: formData.get('target_currency')
+        };
 
-    try {
-        const response = await fetch(`https://api.example.com/convert?amount=${amount}&from=${sourceCurrency}&to=${targetCurrency}`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch data');
+        try {
+            const response = await fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const result = await response.json();
+            document.getElementById('result').innerHTML = `Converted Amount: ${result.converted_amount}`;
+        } catch (error) {
+            document.getElementById('result').innerHTML = `Error: ${error.message}`;
         }
-        const data = await response.json();
-        const resultBar = document.createElement('div');
-        resultBar.textContent = `Converted Amount: ${data.result}`;
-        resultDiv.appendChild(resultBar);
-    } catch (error) {
-        console.error('Error:', error);
-        resultDiv.textContent = 'Failed to fetch data. Please try again.';
-    }
+    });
 });
