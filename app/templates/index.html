@@ -10,25 +10,27 @@
 <body>
 <div class="container">
     <h1>Currency Converter</h1>
-    <form id="currency-form">
+    <form id="currency-form" action="/" method="POST">
         <label for="amount">Amount:</label>
-	<input type="number" id="amount" name="amount" required>
+        <input type="number" id="amount" name="amount" required>
 
         <label for="source_currency">Source Currency:</label>
-	<div id="source_currency">
-		{% include 'currencies_form.html' %}
-	</div
+        {% include 'source_currency.html' %}
 
         <label for="target_currency">Target Currency:</label>
-	<div id="target_currency">
-		{% include 'currencies_form.html' %}
-	</div>
+        {% include 'target_currency.html' %}
 
         <button type="submit">Convert</button>
     </form>
-    <div id="result"></div>
+    <div id="result">
+        {% if converted_amount %}
+            <p>Converted Amount: {{ converted_amount }}</p>
+        {% elif error %}
+            <p>Error: {{ error }}</p>
+        {% endif %}
+    </div>
 </div>
 
-<script src="./static/js/script.js"></script>
+<script src="../static/js/script.js"></script>
 </body>
 </html>
