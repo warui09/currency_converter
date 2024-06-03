@@ -50,17 +50,28 @@ currency-converter/
 │   ├── app.py
 │   ├── requirements.py
 │   ├── templates/
-│   │   ├── base.html
 │   │   ├── index.html
-│   │   └── result.html
+│   │   └── currencies_form.html
 │   └── static/
-│       └── styles.css
+│       ├── css
+│	│   └── styles.css
+│       └── js
+│           ├── script.js
+│	    ├── source_currency.js
+│           └── target_currency.js
 │
 ├── application.py
 ├── .git/
 ├── .gitignore
 ├── README.md
 └── venv/
+
+## Authors
+Harrison Nyabuto
+nyabutoharrison2@gmail.com
+
+Kevin Warui
+waruimacharia@gmail.com
 
 ## License
 
