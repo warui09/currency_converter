@@ -1,8 +1,8 @@
 # Currency Converter App
 
-## Description
-
 ![Alt text](./images/forex-python.webp)
+
+## Description
 
 The Currency Converter App is a web application built using Flask that allows users to convert
 between different currencies.
